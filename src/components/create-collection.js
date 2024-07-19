@@ -12,6 +12,7 @@ const CreateCollection = () => {
     try {
       const result = await createCollection(collectionName);
       setMessage(result.status);
+      setCollectionName(''); // Clear the input box
       clearMessageAfterDelay();
     } catch (error) {
       if (error.response && error.response.data) {

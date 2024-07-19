@@ -30,12 +30,34 @@ const Search = () => {
     setImageUrl('');
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const result = await nearbySearch(collectionName, query, image);
+  //     setResults(result.data);
+  //     setMessage('');
+  //   } catch (error) {
+  //     if (error.response && error.response.data) {
+  //       setMessage(error.response.data.detail);
+  //     } else {
+  //       setMessage('An unexpected error occurred');
+  //     }
+  //     setResults([]);
+  //   }
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const result = await nearbySearch(collectionName, query, image);
-      setResults(result.data);
-      setMessage('');
+      console.log(result); // Log the results to check the structure
+      if (result && result.length > 0) {
+        setResults(result);
+        setMessage('');
+      } else {
+        setMessage('No results found');
+        setResults([]);
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         setMessage(error.response.data.detail);
@@ -90,9 +112,9 @@ const Search = () => {
       <div className="mt-6 space-y-4">
         {results.map((result, index) => (
           <div key={index} className="p-4 border border-gray-300 rounded-lg bg-white shadow-sm">
-            {result.name && <p className="font-semibold">{result.name}</p>}
-            {result.image && <img src={`data:image/jpeg;base64,${result.image}`} alt="Result" className="w-full h-auto rounded" />}
-            {result.text && <p>{result.text}</p>}
+            {result.name && <p className="font-semibold text-black">{"Name: " + result.name}</p>}
+            {result.b64image && <img src={`data:image/jpeg;base64,${result.b64image}`} alt="Result" className="w-full h-auto rounded" />}
+            {result.text && <p className="text-black">{"Text: " + result.text}</p>}
           </div>
         ))}
       </div>

@@ -13,9 +13,17 @@ const DeleteCollection = () => {
     try {
       const result = await deleteCollection(collectionName);
       setMessage(result.status);
+      setCollectionName(''); // Clear the input box
+      clearMessageAfterDelay();
     } catch (error) {
       setMessage(error.response.data.detail);
     }
+  };
+
+  const clearMessageAfterDelay = () => {
+    setTimeout(() => {
+      setMessage('');
+    }, 5000); // Clear the message after 5 seconds
   };
 
   return (
